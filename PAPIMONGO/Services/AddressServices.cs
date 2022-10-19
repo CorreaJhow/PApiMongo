@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using MongoDB.Driver;
 using PAPIMONGO.Models;
 using PAPIMONGO.Utils;
@@ -25,5 +26,12 @@ namespace PAPIMONGO.Services
 
         public Address Get(string id) => _address.Find<Address>(address => address.Id == id).FirstOrDefault();//retorna quem achar.
 
+        public void Update(string id, Address addressIn)
+        {
+            _address.ReplaceOne(address => address.Id == id, addressIn);
+            Get(addressIn.Id);
+        }
+
+        public void Remove(Address clientIn) => _address.DeleteOne(client => client.Id == clientIn.Id);
     }
 }
