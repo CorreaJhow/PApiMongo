@@ -40,6 +40,7 @@ namespace PAPIMONGO
             services.Configure<DataBaseSettings>(Configuration.GetSection(nameof(DataBaseSettings)));
             services.AddSingleton<IDatabaseSettings>(sp => sp.GetRequiredService<IOptions<DataBaseSettings>>().Value);
             services.AddSingleton<ClientServices>();
+            services.AddSingleton<AddressServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
