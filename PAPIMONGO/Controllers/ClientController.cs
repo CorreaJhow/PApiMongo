@@ -18,7 +18,7 @@ namespace PAPIMONGO.Controllers
 
         [HttpGet]
         public ActionResult<List<Client>> Get() => _clientServices.Get();
-        [HttpGet("{id:lenght(24)}", Name = "GetClient")]
+        [HttpGet("{id:length(24)}", Name = "GetClient")]
         public ActionResult<Client> Get(string id)
         {
             var client = _clientServices.Get(id);
