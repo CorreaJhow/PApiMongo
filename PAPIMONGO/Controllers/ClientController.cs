@@ -12,9 +12,11 @@ namespace PAPIMONGO.Controllers
     public class ClientController : ControllerBase
     {
         private readonly ClientServices _clientServices;
-        public ClientController(ClientServices clientServices)
+        private readonly AddressServices _addressServices;
+        public ClientController(ClientServices clientServices, AddressServices addressServices)
         {
             _clientServices = clientServices;
+            _addressServices = addressServices;
         }
 
         [HttpGet]
@@ -28,9 +30,30 @@ namespace PAPIMONGO.Controllers
 
             return Ok(client);          
         }
+        [HttpGet("GetAdress")] //achando por endereço
+        public ActionResult<Client> GetAddress(string idAddress)
+        {
+            var client = _clientServices.Get(idAddress);
+            if (client == null)
+                return NotFound();
+            return Ok(client);
+        }
+        [HttpGet("GetName")] //achando pelo nome
+        public ActionResult<Client> GetName(string nome)
+        {
+            var client = _clientServices.Get(nome);
+            if (client == null)
+                return NotFound();
+            return Ok(client);
+        }
+
+
         [HttpPost]
         public ActionResult<Client> Create(Client client)
         {
+            Address address = _addressServices.Create(client.Address);
+            client.Address = address;
+
             _clientServices.Create(client);
             return CreatedAtRoute("GetClient", new {id = client.Id.ToString()}, client);
         }
@@ -41,7 +64,7 @@ namespace PAPIMONGO.Controllers
             if (client == null)
                 return NotFound();
 
-            _clientServices.Update(id, clientIn); //manipulação do objeto criado!!
+            _clientServices.Update(id, clientIn); //manipulação do objeto criado!! TAREFA AQUI!!
             return NoContent();         
         }
         [HttpDelete]

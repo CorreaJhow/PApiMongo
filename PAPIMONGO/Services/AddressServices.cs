@@ -24,7 +24,7 @@ namespace PAPIMONGO.Services
 
         public List<Address> Get() => _address.Find<Address>(address => true).ToList(); //retorna EVERYBODY
 
-        public Address Get(string id) => _address.Find<Address>(address => address.Id == id).FirstOrDefault();//retorna quem achar.
+        public Address Get(string id) => _address.Find<Address>(address => address.Id == id).FirstOrDefault();//retorna o primeiro que achar.
 
         public void Update(string id, Address addressIn)
         {
@@ -32,6 +32,6 @@ namespace PAPIMONGO.Services
             Get(addressIn.Id);
         }
 
-        public void Remove(Address clientIn) => _address.DeleteOne(client => client.Id == clientIn.Id);
+        public void Remove(Address addresss) => _address.DeleteOne(address => address.Id == addresss.Id);
     }
 }
